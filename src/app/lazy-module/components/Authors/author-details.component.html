@@ -1,0 +1,119 @@
+<div class="bg-light m-4 inline-center w-75 full-width-on-small-screen">
+  <div class="card w-100 border-danger mb-3">
+    <div class="bg-transparent w-100 text-center">
+      <div class="d-relative inline-center full-width-on-small-screen">
+        <img
+          class="cursor-pointer full-width-on-small-screen"
+          (click)="openFileUploading('file')"
+          [src]="'../../../../assets/img/' + author.id + '.jpg'"
+        />
+        <div class="absolute-down bg-dark text-light w-100 p-2">
+          <ng-content select="[title]"></ng-content>
+        </div>
+      </div>
+    </div>
+    <div>
+      <input
+        style="visibility: hidden"
+        class="input-file-upload"
+        type="file"
+        id="file"
+        #id
+        name="file"
+        formControlName="file"
+      />
+    </div>
+    <div class="card-body text-danger">
+      <p class="card-text text-dark">
+        Total Comments : {{ author.totalComments }}
+      </p>
+      <p class="card-text text-dark">
+        Total Publications : {{ author.totalPosts }}
+      </p>
+    </div>
+    <div class="card-footer bg-transparent mt-4 text-left fw-bolder">
+      Author Publications
+    </div>
+    <div class="w-100">
+      <table class="w-100">
+        <tr>
+          <td class="border bg-danger text-light">Title</td>
+          <td class="border bg-danger text-light">Type</td>
+          <td class="border bg-danger text-light">Date</td>
+        </tr>
+        <tr *ngFor="let item of articleList; let i = index">
+          <ng-container
+            *ngIf="i >= articePageNumber * 3 && i < (articePageNumber + 1) * 3"
+          >
+            <td class="border">{{ item.title }}</td>
+            <td class="border">{{ item.type }}</td>
+            <td class="border">{{ item.createdOn }}</td>
+          </ng-container>
+        </tr>
+      </table>
+      <div>Number of articles : {{ articleList.length }}</div>
+      <div>
+        <button
+          [disabled]="articePageNumber === 0"
+          class="m-1"
+          (click)="articePageNumber = articePageNumber - 1"
+        >
+          Prev
+        </button>
+        <button
+          [disabled]="!(articePageNumber * 3 < articleList.length)"
+          class="m-1"
+          (click)="articePageNumber = articePageNumber + 1"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+
+    <div class="card-footer bg-transparent border-danger text-left fw-bolder">
+      Author's Comments
+    </div>
+    <div class="w-100">
+      <table class="w-100">
+        <tr>
+          <td class="border bg-danger text-light">Title</td>
+          <td class="border bg-danger text-light">Type</td>
+          <td class="border bg-danger text-light">Date</td>
+        </tr>
+        <tr *ngFor="let item of commentList; let i = index">
+          <ng-container
+            *ngIf="
+              i >= commentPageNumber * 3 && i < (commentPageNumber + 1) * 3
+            "
+          >
+            <td class="border">{{ item.title }}</td>
+            <td class="border">{{ item.user }}</td>
+            <td class="border">{{ item.createdOn }}</td>
+          </ng-container>
+        </tr>
+      </table>
+      <div>Number of comments : {{ commentList.length }}</div>
+      <div>
+        <button
+          [disabled]="commentPageNumber === 0"
+          class="m-1"
+          (click)="commentPageNumber = commentPageNumber - 1"
+        >
+          Prev
+        </button>
+        <button
+          [disabled]="!(commentPageNumber * 3 < articleList.length)"
+          class="m-1"
+          (click)="commentPageNumber = commentPageNumber + 1"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="m-4 inline-center w-75">
+  <button class="cursor-pointer" (click)="returnToPArentComponent()">
+    return
+  </button>
+</div>

@@ -1,0 +1,154 @@
+<ng-container>
+  <div class="w-100">
+    <!--Autocomplete Search-->
+    <form [formGroup]="formSearch">
+      <input
+        class="w-100 p-2"
+        placeholder="search Id or Name of authors"
+        formControlName="itemToSearch"
+      />
+    </form>
+  </div>
+  <div class="w-100 m-3 text-left btn-span">
+    <span class="p-1 border" (click)="componentSetting.showAddNew = true"
+      >Click Here To Add New Author</span
+    >
+  </div>
+
+  <div
+    class="p-1 rounded rounded-3 text-left text-light bg-danger w-25 m-1 full-width-on-small-screen"
+  >
+    <select
+      (change)="sort($event.target)"
+      class="full-width-on-small-screen p-2 bg-danger border-0 text-light"
+    >
+      <option *ngFor="let item of authorSortTypeArray">
+        {{ item }}
+      </option>
+    </select>
+  </div>
+
+  <div class="d-flex flex-nowrap bg-danger text-light fw-bold">
+    <div class="field">Name</div>
+    <div class="field">Total Publications</div>
+    <div class="field">Total Comments</div>
+  </div>
+  <!--List Of Authors-->
+  <div
+    class="row-author d-flex flex-nowrap bg-light"
+    *ngFor="let item of authorList; let i = index"
+    (click)="showDetailsOfAUthor(i)"
+  >
+    <ng-container *ngIf="i <= componentSetting.paginationCounterForauthorList">
+      <div class="field">
+        {{ item.name }}
+      </div>
+      <div class="field">
+        {{ item.totalComments }}
+      </div>
+      <div class="field">
+        {{ item.totalPosts }}
+      </div>
+    </ng-container>
+  </div>
+  <div>
+    <span class="text-small text-muted">
+      {{ authorList?.length }} Items found
+    </span>
+  </div>
+  <div>
+    <div *ngIf="componentSetting.loadingForShowMore">
+      <img src="../../assets/img/loading.gif" class="img-icons" />
+    </div>
+    <button
+      class="text-danger text-small bg-light mt-4"
+      (click)="showMore()"
+      *ngIf="!componentSetting.loadingForShowMore"
+    >
+      <span> show more </span>
+    </button>
+  </div>
+</ng-container>
+<!--Modal For Show Details Of Author Selected By cUser Via Click On It-->
+<ng-container *ngIf="componentSetting.showDetailsFlag">
+  <div class="frame-modal w-100 text-center">
+    <app-author-details
+      (returnToList)="returnToList()"
+      [author]="authorList[componentSetting.authorIndexToShowDetails]"
+    >
+      <span class="fw-bold" title>
+        {{ authorList[componentSetting.authorIndexToShowDetails].name }}
+      </span>
+    </app-author-details>
+  </div>
+</ng-container>
+<!--Modal For Users Want To Insert New Author-->
+<ng-container *ngIf="componentSetting.showAddNew">
+  <div class="frame-modal w-100 text-center">
+    <div
+      class="bg-light w-75 full-width-on-small-screen p-2 inline-center mt-4"
+    >
+      <form [formGroup]="formNewAuthor">
+        <div class="d-flex row-form">
+          <div>
+            <label>ID</label>
+          </div>
+
+          <div>
+            <input type="number" placeholder="id" formControlName="id" />
+          </div>
+        </div>
+        <div class="d-flex row-form">
+          <div>
+            <label>Name</label>
+          </div>
+          <div>
+            <input placeholder="name" formControlName="name" />
+          </div>
+        </div>
+        <div class="d-flex row-form">
+          <div>
+            <label>Total Comments</label>
+          </div>
+          <div>
+            <input
+              type="number"
+              placeholder="Total Comments"
+              formControlName="totalComments"
+            />
+          </div>
+        </div>
+        <div class="d-flex row-form">
+          <div>
+            <label>Total Posts</label>
+          </div>
+          <div>
+            <input
+              type="number"
+              placeholder="Total Posts"
+              formControlName="totalPosts"
+            />
+          </div>
+        </div>
+        <div class="p-4 m-1">
+          <button
+            class="full-width-on-small-screen"
+            [disabled]="!formNewAuthor.valid"
+            (click)="addNewAuthor()"
+          >
+            Add
+          </button>
+        </div>
+
+        <div class="p-4 m-1">
+          <button
+            class="bg-light text-dark"
+            (click)="componentSetting.showAddNew = false"
+          >
+            close
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-container>
