@@ -43,8 +43,7 @@ export class AuthorDetailsComponent implements OnChanges, OnInit, OnDestroy {
   }
 returnNumberToArrayForLoops(l:number){
   const result:any=[]
-  result.length=10
-  console.log(result.fill(1,0,l))
+  result.length=Math.max(this.articleList.length,this.commentList.length)
   return result.fill('F',0,l+1)
 }
   connectToArticlelist() {
