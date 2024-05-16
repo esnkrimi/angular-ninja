@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { map, switchMap, tap } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs';
 import { actions } from './actions';
 import { PublicationService } from '../service';
 
@@ -14,13 +14,12 @@ export class storeEffects {
     return this.actions$.pipe(
       ofType(actions.startFetchAuthorList),
       switchMap((result: any) => {
-        return this.publicationService$
-          .fetchAuthors(result.sortType)
-          .pipe(
-            map((res: any) =>
-              actions.fetchAuthorList({ data: res, sortType: result.sortType })
-            )
-          );
+        return this.publicationService$.fetchAuthors(result.sortType).pipe(
+          map((x) => x.slice(0, result.lengths)),
+          map((res: any) =>
+            actions.fetchAuthorList({ data: res, sortType: result.sortType })
+          )
+        );
       })
     );
   });

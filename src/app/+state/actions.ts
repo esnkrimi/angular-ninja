@@ -7,7 +7,7 @@ export const actions = createActionGroup({
   events: {
     'start add author': props<{ data: any }>(),
     'start search ': props<{ title: string }>(),
-    'start fetch author list': props<{ sortType: string }>(),
+    'start fetch author list': props<{ sortType: string,lengths:number }>(),
     'fetch author list': props<{ data: Author[]; sortType: string }>(),
     'start fetch comment list': emptyProps(),
     'fetch comment list': props<{ data: Comment[] }>(),
