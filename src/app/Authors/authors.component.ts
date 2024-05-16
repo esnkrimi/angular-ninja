@@ -20,7 +20,7 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
     showDetailsFlag: false,
     authorIndexToShowDetails: 0,
     showAddNew: false,
-    sort:''
+    sort: '',
   };
   authorSortType: AuthorSortType;
   authorSortTypeArray: any = [];
@@ -38,7 +38,7 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
 
   constructor(private store: Store, private service: PublicationService) {}
   ngAfterViewInit(): void {
-    this.fetchAuthorList('name',4);
+    this.fetchAuthorList('name', 4);
     this.connectToAuthorlist();
     this.listenToSearchInput();
   }
@@ -55,8 +55,11 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
   }
   sort(sortType: any) {
     this.service.loadingProgressFlag.next(true);
-    this.componentSetting.sort=sortType.value
-    this.fetchAuthorList(sortType.value,this.componentSetting.paginationCounterForauthorList );
+    this.componentSetting.sort = sortType.value;
+    this.fetchAuthorList(
+      sortType.value,
+      this.componentSetting.paginationCounterForauthorList
+    );
     setTimeout(() => {
       this.service.loadingProgressFlag.next(false);
     }, 500);
@@ -84,15 +87,14 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
       .get('itemToSearch')
       ?.valueChanges.pipe(debounceTime(200))
       .subscribe((res: any) => {
-        this.service.loadingProgressFlag.next(true)
+        this.service.loadingProgressFlag.next(true);
         if (res.length > 0)
           this.authorList = this.authorList.filter((result: any) =>
             this.compare(result, res)
           );
         else this.connectToAuthorlist();
         setTimeout(() => {
-        this.service.loadingProgressFlag.next(false)
-          
+          this.service.loadingProgressFlag.next(false);
         }, 500);
       });
   }
@@ -101,20 +103,25 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
     this.componentSetting.showDetailsFlag = true;
     this.componentSetting.authorIndexToShowDetails = index;
   }
-  fetchAuthorList(sortType: string,len:number) {
-    this.store.dispatch(actions.startFetchAuthorList({ sortType: sortType ,lengths:len}));
+  fetchAuthorList(sortType: string, len: number) {
+    this.store.dispatch(
+      actions.startFetchAuthorList({ sortType: sortType, lengths: len })
+    );
   }
   showMore() {
     this.componentSetting.loadingForShowMore = true;
-    this.componentSetting.paginationCounterForauthorList = this.componentSetting.paginationCounterForauthorList +4
-    this.fetchAuthorList(this.componentSetting.sort,this.componentSetting.paginationCounterForauthorList)
     setTimeout(() => {
+      this.componentSetting.paginationCounterForauthorList =
+        this.componentSetting.paginationCounterForauthorList + 4;
+      this.fetchAuthorList(
+        this.componentSetting.sort,
+        this.componentSetting.paginationCounterForauthorList
+      );
       this.componentSetting.loadingForShowMore = false;
-    }, 500);
+    }, 1000);
   }
   connectToAuthorlist() {
-    this.observableHandle = this.store.select(selectAuthor)
-    .subscribe((res) => {
+    this.observableHandle = this.store.select(selectAuthor).subscribe((res) => {
       this.authorList = res;
     });
   }
