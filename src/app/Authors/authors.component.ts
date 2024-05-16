@@ -83,11 +83,16 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
       .get('itemToSearch')
       ?.valueChanges.pipe(debounceTime(200))
       .subscribe((res: any) => {
+        this.service.loadingProgressFlag.next(true)
         if (res.length > 0)
           this.authorList = this.authorList.filter((result: any) =>
             this.compare(result, res)
           );
         else this.connectToAuthorlist();
+        setTimeout(() => {
+        this.service.loadingProgressFlag.next(false)
+          
+        }, 500);
       });
   }
 
