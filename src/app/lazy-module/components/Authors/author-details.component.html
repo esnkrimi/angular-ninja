@@ -32,7 +32,8 @@
       </p>
     </div>
     <div class="card-footer bg-transparent mt-4 text-left fw-bolder">
-      Author Publications
+      Author Publications 
+      -  <span> Number of articles : {{ articleList.length }} </span>
     </div>
     <div class="w-100">
       <table class="w-100">
@@ -51,27 +52,30 @@
           </ng-container>
         </tr>
       </table>
-      <div>Number of articles : {{ articleList.length }}</div>
+   
       <div>
         <button
-          [disabled]="articePageNumber === 0"
-          class="m-1"
-          (click)="articePageNumber = articePageNumber - 1"
+          class="bg-light"
+          (click)="articePageNumber = li"
+          *ngFor="
+            let l of returnNumberToArrayForLoops(articleList.length / 3);
+            let li = index
+          "
         >
-          Prev
-        </button>
-        <button
-          [disabled]="!(articePageNumber * 3 < articleList.length)"
-          class="m-1"
-          (click)="articePageNumber = articePageNumber + 1"
-        >
-          Next
+          <span
+            [class.text-danger]="articePageNumber === li"
+            class="m-1 rounded-circle"
+            *ngIf="l === 'F'"
+          >
+            {{ li + 1 }}
+          </span>
         </button>
       </div>
     </div>
 
     <div class="card-footer bg-transparent border-danger text-left fw-bolder">
       Author's Comments
+       - <span>Number of comments : {{ commentList.length }}</span>
     </div>
     <div class="w-100">
       <table class="w-100">
@@ -92,21 +96,23 @@
           </ng-container>
         </tr>
       </table>
-      <div>Number of comments : {{ commentList.length }}</div>
+
       <div>
         <button
-          [disabled]="commentPageNumber === 0"
-          class="m-1"
-          (click)="commentPageNumber = commentPageNumber - 1"
+          class="bg-light"
+          (click)="commentPageNumber = li"
+          *ngFor="
+            let l of returnNumberToArrayForLoops(commentList.length / 3);
+            let li = index
+          "
         >
-          Prev
-        </button>
-        <button
-          [disabled]="!(commentPageNumber * 3 < articleList.length)"
-          class="m-1"
-          (click)="commentPageNumber = commentPageNumber + 1"
-        >
-          Next
+          <span
+            [class.text-danger]="commentPageNumber === li"
+            class="m-1 rounded-circle"
+            *ngIf="l === 'F'"
+          >
+            {{ li + 1 }}
+          </span>
         </button>
       </div>
     </div>

@@ -109,7 +109,7 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
       this.componentSetting.paginationCounterForauthorList =
         this.authorList.length >
         this.componentSetting.paginationCounterForauthorList
-          ? this.componentSetting.paginationCounterForauthorList + 3
+          ? this.componentSetting.paginationCounterForauthorList + 4
           : this.componentSetting.paginationCounterForauthorList;
       this.componentSetting.loadingForShowMore = false;
     }, 500);
