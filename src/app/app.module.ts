@@ -11,10 +11,13 @@ import { storeEffects } from './+state/effetcs';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthorComponent } from './Authors/authors.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IDRepeatedValidatorDirective } from './Authors/validator.id';
+
 @NgModule({
-  declarations: [AppComponent, AuthorComponent],
+  declarations: [AppComponent, AuthorComponent,],
   imports: [
     BrowserModule,
+    IDRepeatedValidatorDirective,
     AppRoutingModule,
     HttpClientModule,
     LazyModuleModule,

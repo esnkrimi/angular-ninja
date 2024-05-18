@@ -39,7 +39,7 @@
     *ngFor="let item of authorList; let i = index"
     (click)="showDetailsOfAUthor(i)"
   >
-    <ng-container >
+    <ng-container>
       <div class="field">
         {{ item.name }}
       </div>
@@ -95,7 +95,12 @@
           </div>
 
           <div>
-            <input type="number" placeholder="id" formControlName="id" />
+            <input
+              repeatedID
+              type="number"
+              placeholder="id"
+              formControlName="id"
+            />
           </div>
         </div>
         <div class="d-flex row-form">
@@ -132,11 +137,11 @@
         </div>
         <div class="p-4 m-1">
           <button
-            class="full-width-on-small-screen"
+            class="full-width-on-small-screen p-2 m-2 rounded w-25"
             [disabled]="!formNewAuthor.valid"
             (click)="addNewAuthor()"
           >
-            Add
+            submit
           </button>
         </div>
 

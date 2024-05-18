@@ -29,11 +29,11 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
     itemToSearch: new FormControl(''),
   });
   formNewAuthor = new FormGroup({
-    id: new FormControl(0, Validators.required),
+    id: new FormControl(),
     name: new FormControl('', Validators.required),
     imageUrl: new FormControl(''),
-    totalPosts: new FormControl(0, Validators.required),
-    totalComments: new FormControl(0, Validators.required),
+    totalPosts: new FormControl(Validators.required),
+    totalComments: new FormControl(Validators.required),
   });
 
   constructor(private store: Store, private service: PublicationService) {}
@@ -44,7 +44,6 @@ export class AuthorComponent implements AfterViewInit, OnDestroy, OnInit {
   }
   addNewAuthor() {
     this.service.loadingProgressFlag.next(true);
-
     this.store.dispatch(
       actions.startAddAuthor({ data: this.formNewAuthor.value })
     );
