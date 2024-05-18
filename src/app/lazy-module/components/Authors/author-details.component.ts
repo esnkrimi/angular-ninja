@@ -23,6 +23,12 @@ import { Comment } from '../../../comment-model';
 export class AuthorDetailsComponent implements OnChanges, OnInit, OnDestroy {
   commentPageNumber = 0;
   articePageNumber = 0;
+  @Output() returnToList = new EventEmitter<boolean>();
+  @Input() author: Author;
+  observableHandle: Subscription;
+  articleList: Article[];
+  commentList: Comment[];
+
   constructor(private store: Store) {}
   ngOnDestroy(): void {
     this.observableHandle.unsubscribe();
@@ -31,21 +37,16 @@ export class AuthorDetailsComponent implements OnChanges, OnInit, OnDestroy {
     this.connectToArticlelist();
     this.connectToCommentlist();
   }
-  @Output() returnToList = new EventEmitter<boolean>();
-  @Input() author: Author;
-  observableHandle: Subscription;
-  articleList: Article[];
-  commentList: Comment[];
   ngOnChanges(changes: SimpleChanges): void {}
 
   returnToPArentComponent() {
     this.returnToList.emit(false);
   }
-returnNumberToArrayForLoops(l:number){
-  const result:any=[]
-  result.length=Math.max(this.articleList.length,this.commentList.length)
-  return result.fill('F',0,l+1)
-}
+  returnNumberToArrayForLoops(l: number) {
+    const result: any = [];
+    result.length = Math.max(this.articleList.length, this.commentList.length);
+    return result.fill('F', 0, l + 1);
+  }
   connectToArticlelist() {
     this.observableHandle = this.store
       .select(selectArtice)

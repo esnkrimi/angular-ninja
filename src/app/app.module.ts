@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { reducerStates } from './+state/reducer';
-import { ActionReducer, MetaReducer, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { LazyModuleModule } from './lazy-module/lazy-module.module';
 import { storeEffects } from './+state/effetcs';
@@ -14,11 +13,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IDRepeatedValidatorDirective } from './Authors/validator.id';
 
 @NgModule({
-  declarations: [AppComponent, AuthorComponent,],
+  declarations: [AppComponent, AuthorComponent],
   imports: [
     BrowserModule,
     IDRepeatedValidatorDirective,
-    AppRoutingModule,
     HttpClientModule,
     LazyModuleModule,
     FormsModule,

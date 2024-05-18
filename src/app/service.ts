@@ -5,7 +5,7 @@ import { BehaviorSubject, map, tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class PublicationService {
   loadingProgressFlag=new BehaviorSubject(false)
-  baseUrl = '../../../../../../assets/datas/';
+  baseUrl = 'assets/datas/';
   constructor(private http: HttpClient) {}
 
   fetchAuthors(sortType: any) {
